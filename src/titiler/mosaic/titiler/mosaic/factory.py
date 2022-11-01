@@ -17,7 +17,7 @@ from rio_tiler.io import BaseReader, COGReader, MultiBandReader, MultiBaseReader
 from rio_tiler.models import Bounds
 from rio_tiler.mosaic.methods.base import MosaicMethodBase
 
-from titiler.core.dependencies import DefaultDependency, WebMercatorTMSParams
+from titiler.core.dependencies import DefaultDependency, WebMercatorTMSParams, TMSParams, AssetsBidxExprParams, BandsExprParams
 from titiler.core.factory import BaseTilerFactory, img_endpoint_params, templates
 from titiler.core.models.mapbox import TileJSON
 from titiler.core.resources.enums import ImageType, MediaType, OptionalHeader
@@ -60,6 +60,14 @@ class MosaicTilerFactory(BaseTilerFactory):
         Type[MultiBandReader],
     ] = COGReader
 
+    # Get false color bands from different files.
+    # Original BidxExprParams only contain band indexes and expression parameters like
+    # BidxExprParams(indexes=None, expression=None)
+    # New AssetsBidxExprParams contains assets, expression and asset_indexes like
+    # AssetsBidxExprParams(assets=['B02', 'B03', 'B04'], expression=None, asset_indexes=None, asset_expression=None)
+    # Asset file information is passed to cogeo-mosaic.backends.base.py.
+    # layer_dependency: Type[DefaultDependency] = BidxExprParams
+    layer_dependency: Type[DefaultDependency] = AssetsBidxExprParams
     # BaseBackend does not support other TMS than WebMercator
     tms_dependency: Callable[..., TileMatrixSet] = WebMercatorTMSParams
 
@@ -274,7 +282,7 @@ class MosaicTilerFactory(BaseTilerFactory):
                     ) as src_dst:
                         mosaic_read = t.from_start
                         timings.append(("mosaicread", round(mosaic_read * 1000, 2)))
-
+                        
                         data, _ = src_dst.tile(
                             x,
                             y,

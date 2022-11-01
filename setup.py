@@ -28,6 +28,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
     ],
     keywords="COG STAC MosaicJSON FastAPI Tile Server Dynamic",
     author="Vincent Sarago",

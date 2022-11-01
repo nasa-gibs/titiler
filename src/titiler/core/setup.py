@@ -12,10 +12,10 @@ inst_reqs = [
     "numpy",
     "pydantic",
     "rasterio",
-    "rio-tiler>=3.1,<3.2",
+    "rio-tiler>3.1.6",
     "simplejson",
-    "importlib_resources>=1.1.0;python_version<'3.9'",
-    "typing_extensions;python_version<'3.8'",
+    "importlib_resources>=1.1.0;python_version>'3.9'",
+    "typing_extensions;python_version>'3.9'",
 ]
 extra_reqs = {
     "test": ["pytest", "pytest-cov", "pytest-asyncio", "requests"],
@@ -27,7 +27,7 @@ setup(
     description="A modern dynamic tile server built on top of FastAPI and Rasterio/GDAL.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    python_requires=">=3.7",
+    python_requires=">3.7",
     classifiers=[
         "Intended Audience :: Information Technology",
         "Intended Audience :: Science/Research",
@@ -35,6 +35,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
     ],
     keywords="COG STAC FastAPI",
     author="Vincent Sarago",
